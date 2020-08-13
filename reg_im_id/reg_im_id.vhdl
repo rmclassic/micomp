@@ -6,10 +6,8 @@ entity reg_im_id is
     port
         (
          clk         : in std_logic;
-         pc_in          : in std_logic_vector(31 downto 0);
-         ins_in         : in std_logic_vector(31 downto 0);
-         pc_out         : out std_logic_vector(31 downto 0);
-         ins_out        : out std_logic_vector(31 downto 0);
+         pc          : inout std_logic_vector(31 downto 0);
+         ins         : inout std_logic_vector(31 downto 0);
          write_reg   : in std_logic
         );
 
@@ -17,7 +15,7 @@ end reg_im_id;
 
 architecture behav of reg_im_id is
     -- Register file
-    signal pc : std_logic_vector(31 downto 0);
+    signal pc_reg : std_logic_vector(31 downto 0);
     signal instruction: std_logic_vector(31 downto 0);
 
 begin
@@ -25,12 +23,12 @@ begin
 --------------------------------------------------
 ------------   READ REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, pc_in, ins_in)
+    process (clk, write_reg, pc, ins)
     begin
         if clk = '1' then
           report "Reading DATA" severity note;
-          pc_out <= pc;
-          ins_out <= instruction;
+          pc <= pc_reg;
+          ins <= instruction;
         end if;
     end process;
 
@@ -38,14 +36,14 @@ begin
 --------------------------------------------------
 ------------   WRITE REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, pc_in, ins_in)
+    process (clk, write_reg, pc_in, ins)
     begin
       if clk = '1' then
         if write_reg = '1' then
           report "Writing DATA" severity note;
 
-          pc <= pc_in;
-          instruction <= ins_in;
+          pc_reg <= pc;
+          instruction <= ins;
         end if;
       end if;
     end process;
