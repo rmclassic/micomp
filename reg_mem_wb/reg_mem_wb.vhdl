@@ -14,6 +14,8 @@ entity reg_id_ex is
          dst_reg_out    : out std_logic_vector(31 downto 0);
          memtoreg    : in std_logic;
          memtoreg_out: out std_logic;
+         regwrite    : in std_logic;
+         regwrite_out: out std_logic;
          write_reg      : in std_logic
         );
 
@@ -25,6 +27,7 @@ architecture behav of reg_id_ex is
     signal read_data_2_reg: std_logic_vector(31 downto 0);
     signal memtoreg_reg:  std_logic;
     signal dst_reg_reg:  std_logic_vector(31 downto 0);
+    signal regwrite_reg: std_logic;
 
 begin
 
@@ -37,7 +40,7 @@ begin
           report "Reading DATA" severity note;
           alures_out <= alures_reg;
           dst_reg_out <= dst_reg_reg;
-
+          regwrite_out <= regwrite_reg;
           memtoreg_out <= memtoreg_reg;
           read_data_2_out <= read_data_2_reg;
         end if;
@@ -55,7 +58,7 @@ begin
 
           alures_reg <= alures;
           dst_reg_reg <= dst_reg;
-
+          regwrite_reg <= regwrite;
           memtoreg_reg <= memtoreg;
 
           read_data_2 <= read_data_2_reg;

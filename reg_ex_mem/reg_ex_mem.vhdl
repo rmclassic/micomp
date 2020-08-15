@@ -22,6 +22,8 @@ entity reg_id_ex is
          memread_out : out std_logic;
          memtoreg    : in std_logic;
          memtoreg_out: out std_logic;
+         regwrite    : in std_logic;
+         regwrite_out: out std_logic;
          write_reg      : in std_logic
         );
 
@@ -37,6 +39,8 @@ architecture behav of reg_id_ex is
     signal memread_reg     :  std_logic;
     signal memtoreg_reg    :  std_logic;
     signal dst_reg_reg:         std_logic_vector(31 downto 0);
+    signal regwrite_reg : std_logic;
+
 
 begin
 
@@ -51,7 +55,7 @@ begin
           alures_out <= alures_reg;
           aluzero_out <= aluzero_reg;
           dst_reg_out <= dst_reg_reg;
-
+          regwrite_out <= regwrite_reg;
           memwrite_out <= memwrite_reg;
           memread_out <= memread_reg;
           memtoreg_out <= memtoreg_reg;
@@ -73,7 +77,7 @@ begin
           alures_reg <= alures;
           aluzero_reg <= aluzero;
           dst_reg_reg <= dst_reg;
-
+          regwrite_reg <= regwrite;
           memwrite_reg <= memwrite;
           memread_reg <= memread;
           memtoreg_reg <= memtoreg;

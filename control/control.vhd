@@ -81,7 +81,7 @@ process(opcode)
       MemWrite <= '0';
       AluOp <= "000";
 
-  when "00000100" =>
+  when "00000101" =>
       RegDst <= '-'; -- Sc
       MemToReg <= '0';
       Reg_Write <= '0';
