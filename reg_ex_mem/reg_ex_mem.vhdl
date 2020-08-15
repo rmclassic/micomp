@@ -6,14 +6,22 @@ entity reg_id_ex is
     port
         (
          clk            : in std_logic;
-         newpc          : inout std_logic_vector(31 downto 0);
-         alures         : inout std_logic_vector(31 downto 0);
-         aluzero        : inout std_logic;
-         read_data_2    : inout std_logic_vector(31 downto 0);
-         dst_reg        : inout std_logic_vector(31 downto 0);
-         memwrite    : inout std_logic;
-         memread     : inout std_logic;
-         memtoreg    : inout std_logic;
+         newpc          : in std_logic_vector(31 downto 0);
+         newpc_out      : out std_logic_vector(31 downto 0);
+         alures         : in std_logic_vector(31 downto 0);
+         alures_out     : out std_logic_vector(31 downto 0);
+         aluzero        : in std_logic;
+         aluzero_out    : inout std_logic;
+         read_data_2    : in std_logic_vector(31 downto 0);
+         read_data_2_out: out std_logic_vector(31 downto 0);
+         dst_reg        : in std_logic_vector(31 downto 0);
+         dst_reg_out    : out std_logic_vector(31 downto 0);
+         memwrite    : in std_logic;
+         memwrite_out: out std_logic;
+         memread     : in std_logic;
+         memread_out : out std_logic;
+         memtoreg    : in std_logic;
+         memtoreg_out: out std_logic;
          write_reg      : in std_logic
         );
 
@@ -39,14 +47,14 @@ begin
     begin
         if clk = '1' then
           report "Reading DATA" severity note;
-          newpc <= newpc_reg;
-          alures <= alures_reg;
-          aluzero <= aluzero_reg;
-          dst_reg <= dst_reg_reg;
+          newpc_out <= newpc_reg;
+          alures_out <= alures_reg;
+          aluzero_out <= aluzero_reg;
+          dst_reg_out <= dst_reg_reg;
 
-          memwrite <= memwrite_reg;
-          memread <= memread_reg;
-          memtoreg <= memtoreg_reg;
+          memwrite_out <= memwrite_reg;
+          memread_out <= memread_reg;
+          memtoreg_out <= memtoreg_reg;
           read_data_2 <= read_data_2_reg;
         end if;
     end process;
@@ -69,8 +77,8 @@ begin
           memwrite_reg <= memwrite;
           memread_reg <= memread;
           memtoreg_reg <= memtoreg;
-          
-          read_data_2 <= read_data_2_reg;
+
+          read_data_2_reg <= read_data_2;
         end if;
       end if;
     end process;

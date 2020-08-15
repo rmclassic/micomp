@@ -6,8 +6,10 @@ entity reg_im_id is
     port
         (
          clk         : in std_logic;
-         pc          : inout std_logic_vector(31 downto 0);
-         ins         : inout std_logic_vector(31 downto 0);
+         pc          : in std_logic_vector(31 downto 0);
+         pc_out      : out std_logic_vector(31 downto 0);
+         ins         : in std_logic_vector(31 downto 0);
+         ins_out     : out std_logic_vector(31 downto 0);
          write_reg   : in std_logic
         );
 
@@ -23,12 +25,12 @@ begin
 --------------------------------------------------
 ------------   READ REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, pc, ins)
+    process (clk, write_reg, pc_in, ins)
     begin
         if clk = '1' then
           report "Reading DATA" severity note;
-          pc <= pc_reg;
-          ins <= instruction;
+          pc_out <= pc_reg;
+          ins_out <= instruction;
         end if;
     end process;
 
@@ -36,7 +38,7 @@ begin
 --------------------------------------------------
 ------------   WRITE REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, pc_in, ins)
+    process (clk, write_reg, pc, ins)
     begin
       if clk = '1' then
         if write_reg = '1' then

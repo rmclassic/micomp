@@ -6,10 +6,14 @@ entity reg_id_ex is
     port
         (
          clk            : in std_logic;
-         read_data_2    : inout std_logic_vector(31 downto 0);
-         alures         : inout std_logic_vector(31 downto 0);
-         dst_reg        : inout std_logic_vector(31 downto 0);
-         memtoreg    : inout std_logic;
+         read_data_2    : in std_logic_vector(31 downto 0);
+         read_data_2_out: out std_logic_vector(31 downto 0);
+         alures         : in std_logic_vector(31 downto 0);
+         alures_out     : out std_logic_vector(31 downto 0);
+         dst_reg        : in std_logic_vector(31 downto 0);
+         dst_reg_out    : out std_logic_vector(31 downto 0);
+         memtoreg    : in std_logic;
+         memtoreg_out: out std_logic;
          write_reg      : in std_logic
         );
 
@@ -31,11 +35,11 @@ begin
     begin
         if clk = '1' then
           report "Reading DATA" severity note;
-          alures <= alures_reg;
-          dst_reg <= dst_reg_reg;
+          alures_out <= alures_reg;
+          dst_reg_out <= dst_reg_reg;
 
-          memtoreg <= memtoreg_reg;
-          read_data_2 <= read_data_2_reg;
+          memtoreg_out <= memtoreg_reg;
+          read_data_2_out <= read_data_2_reg;
         end if;
     end process;
 

@@ -6,17 +6,26 @@ entity reg_id_ex is
     port
         (
          clk         : in std_logic;
-         pc          : inout std_logic_vector(31 downto 0);
-         zd          : inout std_logic_vector(31 downto 0);
-         zt          : inout std_logic_vector(31 downto 0);
-         read_data_1 : inout std_logic_vector(31 downto 0);
-         read_data_2 : inout std_logic_vector(31 downto 0);
-         alusrc      : inout std_logic;
-         aluop       : inout std_logic_vector(3 downto 0);
-         regdst      : inout std_logic;
-         memwrite    : inout std_logic;
-         memread     : inout std_logic;
-         memtoreg    : inout std_logic;
+         pc          : in std_logic_vector(31 downto 0);
+         pc_out      : out std_logic_vector(31 downto 0);
+         zd          : in std_logic_vector(31 downto 0);
+         zd_out      : out std_logic_vector(31 downto 0);
+         zt          : in std_logic_vector(31 downto 0);
+         zt_out      : out std_logic_vector(31 downto 0);
+         read_data_1 : in std_logic_vector(31 downto 0);
+         read_data_1_out : out  std_logic_vector(31 downto 0);
+         read_data_2 : in std_logic_vector(31 downto 0);
+         read_data_2_out : out std_logic_vector(31 downto 0);
+         aluop       : in std_logic_vector(3 downto 0);
+         aluop_out   : out std_logic_vector(3 downto 0);
+         regdst      : in std_logic;
+         regdst_out  : out std_logic;
+         memwrite    : in std_logic;
+         memwrite_out: out std_logic;
+         memread     : in std_logic;
+         memread_out : out std_logic;
+         memtoreg    : in std_logic;
+         memtoreg_out: out std_logic;
          write_reg   : in std_logic
         );
 
@@ -27,7 +36,6 @@ architecture behav of reg_id_ex is
     signal pc_reg : std_logic_vector(31 downto 0);
     signal zd_reg: std_logic_vector(31 downto 0);
     signal zt_reg: std_logic_vector(31 downto 0);
-    signal alusrc_reg      :  std_logic;
     signal aluop_reg       :  std_logic_vector(3 downto 0);
     signal regdst_reg      :  std_logic;
     signal memwrite_reg    :  std_logic;
@@ -45,15 +53,14 @@ begin
     begin
         if clk = '1' then
           report "Reading DATA" severity note;
-          pc <= pc_reg;
-          zd <= zd_reg;
-          zt <= zt_reg;
-          alusrc <= alusrc_reg;
-          aluop <= aluop_reg;
-          regdst <= regdst_reg;
-          memwrite <= memwrite_reg;
-          memread <= memread_reg;
-          memtoreg <= memtoreg_reg;
+          pc_out <= pc_reg;
+          zd_out <= zd_reg;
+          zt_out <= zt_reg;
+          aluop_out <= aluop_reg;
+          regdst_out <= regdst_reg;
+          memwrite_out <= memwrite_reg;
+          memread_out <= memread_reg;
+          memtoreg_out <= memtoreg_reg;
 
           read_data_1 <= read_data_1_reg;
           read_data_2 <= read_data_2_reg;
@@ -74,7 +81,6 @@ begin
           zd_reg <= zd;
           zt_reg <= zt;
 
-          alusrc_reg <= alusrc;
           aluop_reg <= aluop;
           regdst_reg <= regdst;
           memwrite_reg <= memwrite;
