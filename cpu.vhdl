@@ -10,9 +10,9 @@ architecture RTL of micomp is
   begin
     component insmem
       port (
-        clk: in std_logic;
-        address: in std_logic_vector(31 downto 0);
-        dataout: out std_logic_vector(31 downto 0)
+        clk     : in std_logic;
+        address : in std_logic_vector(31 downto 0);
+        dataout : out std_logic_vector(31 downto 0)
       );
     end component;
     component reg_im_id
@@ -117,8 +117,8 @@ architecture RTL of micomp is
     port
         (
          clk            : in std_logic;
-         read_data_2    : in std_logic_vector(31 downto 0);
-         read_data_2_out: out std_logic_vector(31 downto 0);
+         mem_read_data    : in std_logic_vector(31 downto 0);
+         mem_read_data_out: out std_logic_vector(31 downto 0);
          alures         : in std_logic_vector(31 downto 0);
          alures_out     : out std_logic_vector(31 downto 0);
          dst_reg        : in std_logic_vector(31 downto 0);
@@ -129,20 +129,30 @@ architecture RTL of micomp is
         );
     end component;
     signal clk: std_logic;
-    signal newpc, reg_data_1, reg_data_2, pc_id: std_logic_vector(31 downto 0);
+    signal pc: std_logic_vector(31 downto 0);
+    signal pc_if, pc_id, pc_ex, pc_mem, ins_if, ins_id, reg_data_1, reg_data_2, zd_ex, zt_ex, reg_data_1_ex, reg_data_2_ex, alu_res_ex, alu_res_mem, alu_res_wb, datamem_data_mem, datamem_data_wb: std_logic_vector(31 downto 0);
+    signal aluop_ex: std_logic_vector(3 downto 0);
     begin
       -------------------------------------- IF
-      adder_pc: adder port map(std_logic_vector(4), pc, newpc);
+      adder_pc: adder port map(std_logic_vector(4), pc, pc_if);
       im0: insmem port map(clk, pc, insmem_data_out);
       --------------------------------------- IF/ID
-      if_id_0: reg_im_id port map(clk, newpc, ins, clk);
+      if_id_0: reg_im_id port map(clk, pc_if, pc_id, ins_if, ins_id, clk);
       ---------------------------------------  ID
-      rf_0: RegisterFile port map(clk, ins(12 downto 8), ins(4 downto 0), , , ,reg_data_1, reg_data_2);
+      rf_0: RegisterFile port map(clk, ins_id(12 downto 8), ins_id(4 downto 0), , , ,reg_data_1, reg_data_2);
       --ADD CONTROL
       --------------------------------------- ID/EX
 
-      reg_id_ex_0: reg_id_ex port map(clk, newpc, ins(19 downto 16) , ins(4 downto 0),reg_data_1, reg_data_2, , , , , , , , clk);
+      reg_id_ex_0: reg_id_ex port map(clk, pc_id, pc_ex, ins_id(19 downto 16), zd_ex, ins_id(4 downto 0), zt_ex, reg_data_1, reg_data_1_ex, reg_data_2, reg_data_2_ex, ins(26 downto 22), aluop_ex, , , , , clk);
       --------------------------------------- EX
-      alu_0: alu port map()
-
+      alu_0: alu port map(reg_data_1_ex, reg_data_2_ex, aluop_ex, alu_res_ex);
+      --REGDST MUX
+      --------------------------------------- EX/MEM
+      reg_ex_mem_0: reg_ex_mem port map(clk, pc_ex, pc_mem, alu_res_ex, alu_res_mem, , , reg_data_2_ex, , , , , , ,);
+      --------------------------------------- MEM
+      datamem_0: datamem port map(clk, , , alu_res_mem, , datamem_data_mem)
+      --------------------------------------- MEM/WB
+      reg_mem_wb: reg_mem_wb port map(clk, datamem_data_mem, datamem_data_wb, alu_res_mem, alu_res_wb, , , , , clk);
+      --------------------------------------- WB
+      --MEMTOREG MUX
   end RTL;

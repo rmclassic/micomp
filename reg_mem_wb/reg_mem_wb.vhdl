@@ -6,8 +6,8 @@ entity reg_id_ex is
     port
         (
          clk            : in std_logic;
-         read_data_2    : in std_logic_vector(31 downto 0);
-         read_data_2_out: out std_logic_vector(31 downto 0);
+         mem_read_data    : in std_logic_vector(31 downto 0);
+         mem_read_data_out: out std_logic_vector(31 downto 0);
          alures         : in std_logic_vector(31 downto 0);
          alures_out     : out std_logic_vector(31 downto 0);
          dst_reg        : in std_logic_vector(31 downto 0);
