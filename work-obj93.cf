@@ -1,4 +1,0 @@
-v 4
-file . "cpu.vhdl" "aa30d8cdddf15e6c4a1574b8675ab8dfb0cb1ae1" "20200817100105.774":
-  entity micomp at 1( 0) + 0 on 15;
-  architecture rtl of micomp at 9( 76) + 0 on 16;
