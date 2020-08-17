@@ -28,39 +28,25 @@ architecture behav of RegisterFile is
 begin
 
 --------------------------------------------------
-------------   READ PORT 1 -----------------------
---------------------------------------------------
-    process (clk, regfile, read_reg_1)
-    begin
-        if read_reg_1 = "00000"  then
-            read_data_1 <= (others => '0');
-        else
-            read_data_1 <= regfile(to_integer(unsigned(read_reg_1)));
-        end if;
-    end process;
-
---------------------------------------------------
------------- READ PORT 2 -------------------------
+------------ READ PORTS -------------------------
 --------------------------------------------------
     process (clk, regfile, read_reg_2)
     begin
+      if rising_edge(clk) then
+        if write_enable = '1' then
+          regfile(to_integer(unsigned(write_reg))) <= write_data;
+        end if;
         if read_reg_2 = "00000" then
             read_data_2 <= (others => '0');
         else
             read_data_2 <= regfile(to_integer(unsigned(read_reg_2)));
         end if;
-    end process;
-
---------------------------------------------------
-------------   WRITE -----------------------------
---------------------------------------------------
-    process (clk)
-    begin
-        if rising_edge(clk) then
-          if write_enable = '1' then
-            regfile(to_integer(unsigned(write_reg))) <= write_data;
-          end if;
+        if read_reg_1 = "00000"  then
+            read_data_1 <= (others => '0');
+        else
+            read_data_1 <= regfile(to_integer(unsigned(read_reg_1)));
         end if;
+      end if;
     end process;
 
 end behav;

@@ -5,9 +5,9 @@ use IEEE.NUMERIC_STD.ALL;
 entity divider is
    port
    (
-      Nibble1, Nibble2: in std_logic_vector(7 downto 0);
+      Nibble1, Nibble2: in std_logic_vector(15 downto 0);
 
-      Result: out std_logic_vector(7 downto 0)
+      Result: out std_logic_vector(15 downto 0)
    );
 end entity divider;
 

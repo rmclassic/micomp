@@ -23,9 +23,10 @@ begin
   begin
     if rising_edge(clk) then
       read_address <= address;
+      dataout <= ram(to_integer(unsigned(read_address)));
+
     end if;
   end process;
 
-  dataout <= ram(to_integer(unsigned(read_address)));
 
 end architecture RTL;

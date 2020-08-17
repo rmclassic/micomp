@@ -36,7 +36,7 @@ architecture struct of alu is
   port (
     i0: in std_logic_vector(15 downto 0);
     i1: in std_logic_vector(15 downto 0);
-    s: in bit;
+    s: in std_logic;
     o: out std_logic_vector(15 downto 0)
   );
   end component;
@@ -55,14 +55,12 @@ architecture struct of alu is
   end component;
   signal rsum, vsum, rsub, vsub, rmult, vmult, rdiv, vdiv, sum, sub, mult, div, rnega, rnegb, vnega, vnegb, rmux, vmux: std_logic_vector(15 downto 0);
   signal nsum, nsub, nmult, ndiv, nnega, nnegb: std_logic_vector(31 downto 0);
-  signal submux: bit;
   begin
     -------------------------------------------------------- ADDER
-    submux <= to_bit(op(0));
     r_negb: neger_16b port map(b(31 downto 16), rnegb);
-    r_mux: mux2_1_16b port map(b(31 downto 16), rnegb, submux, rmux);
+    r_mux: mux2_1_16b port map(b(31 downto 16), rnegb, op(0), rmux);
     v_negb: neger_16b port map(b(15 downto 0), vnegb);
-    v_mux: mux2_1_16b port map(b(15 downto 0), vnegb, submux, vmux);
+    v_mux: mux2_1_16b port map(b(15 downto 0), vnegb, op(0), vmux);
     r_adder: adder port map(a(31 downto 16), rmux, rsum);
     v_adder: adder port map(a(15 downto 0), vmux, vsum);
 

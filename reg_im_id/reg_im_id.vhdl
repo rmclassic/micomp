@@ -25,7 +25,7 @@ begin
 --------------------------------------------------
 ------------   READ REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, pc_in, ins)
+    process (clk, write_reg, pc, ins)
     begin
         if clk = '1' then
           report "Reading DATA" severity note;

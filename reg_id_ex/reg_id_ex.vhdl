@@ -8,16 +8,18 @@ entity reg_id_ex is
          clk         : in std_logic;
          pc          : in std_logic_vector(31 downto 0);
          pc_out      : out std_logic_vector(31 downto 0);
-         zd          : in std_logic_vector(31 downto 0);
-         zd_out      : out std_logic_vector(31 downto 0);
-         zt          : in std_logic_vector(31 downto 0);
-         zt_out      : out std_logic_vector(31 downto 0);
+         zd          : in std_logic_vector(4 downto 0);
+         zd_out      : out std_logic_vector(4 downto 0);
+         zt          : in std_logic_vector(4 downto 0);
+         zt_out      : out std_logic_vector(4 downto 0);
          read_data_1 : in std_logic_vector(31 downto 0);
          read_data_1_out : out  std_logic_vector(31 downto 0);
          read_data_2 : in std_logic_vector(31 downto 0);
          read_data_2_out : out std_logic_vector(31 downto 0);
-         aluop       : in std_logic_vector(3 downto 0);
-         aluop_out   : out std_logic_vector(3 downto 0);
+         aluop       : in std_logic_vector(1 downto 0);
+         aluop_out   : out std_logic_vector(1 downto 0);
+         func        : in std_logic_vector(5 downto 0);
+         func_out    : out std_logic_vector(5 downto 0);
          regdst      : in std_logic;
          regdst_out  : out std_logic;
          memwrite    : in std_logic;
@@ -36,9 +38,9 @@ end reg_id_ex;
 architecture behav of reg_id_ex is
     -- Register file
     signal pc_reg : std_logic_vector(31 downto 0);
-    signal zd_reg: std_logic_vector(31 downto 0);
-    signal zt_reg: std_logic_vector(31 downto 0);
-    signal aluop_reg       :  std_logic_vector(3 downto 0);
+    signal zd_reg: std_logic_vector(4 downto 0);
+    signal zt_reg: std_logic_vector(4 downto 0);
+    signal aluop_reg       :  std_logic_vector(1 downto 0);
     signal regdst_reg      :  std_logic;
     signal memwrite_reg    :  std_logic;
     signal memread_reg     :  std_logic;
@@ -46,6 +48,7 @@ architecture behav of reg_id_ex is
     signal read_data_1_reg: std_logic_vector(31 downto 0);
     signal read_data_2_reg: std_logic_vector(31 downto 0);
     signal regwrite_reg   : std_logic;
+    signal func_reg       : std_logic_vector(5 downto 0);
 
 begin
 
@@ -65,8 +68,9 @@ begin
           memread_out <= memread_reg;
           memtoreg_out <= memtoreg_reg;
           regwrite_out <= regwrite_reg;
-          read_data_1 <= read_data_1_reg;
-          read_data_2 <= read_data_2_reg;
+          read_data_1_out <= read_data_1_reg;
+          read_data_2_out <= read_data_2_reg;
+          func_out <= func_reg;
         end if;
     end process;
 
@@ -90,8 +94,9 @@ begin
           memread_reg <= memread;
           memtoreg_reg <= memtoreg;
           regwrite_reg <= regwrite;
-          read_data_1 <= read_data_1_reg;
-          read_data_2 <= read_data_2_reg;
+          read_data_1_reg <= read_data_1;
+          read_data_2_reg <= read_data_2;
+          func_reg <= func;
         end if;
       end if;
     end process;

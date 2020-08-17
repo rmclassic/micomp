@@ -4,15 +4,14 @@ use ieee.numeric_std.all;
 
 entity hazard_detection_unit is
 
-    port 
-        (reg_zt_id : in std_logic_vector(4 downto 0)
-        ;reg_zs_id : in std_logic_vector(4 downto 0)
-	;reg_zt_ex : in std_logic_vector(4 downto 0)
-	;memread_ex : in std_logic
-
-	;pc_write : out std_logic
-	;ifid_write : out std_logic
-	;stall_sel : out std_logic
+  port(
+    reg_zt_id : in std_logic_vector(4 downto 0);
+    reg_zs_id : in std_logic_vector(4 downto 0);
+	  reg_zt_ex : in std_logic_vector(4 downto 0);
+	  memread_ex : in std_logic;
+	  pc_write : out std_logic;
+	  ifid_write : out std_logic;
+	  stall_sel : out std_logic
 	);
 end hazard_detection_unit;
 
@@ -24,7 +23,7 @@ begin
     process(memread_ex, reg_zt_id, reg_zs_id, reg_zt_ex)
     begin
 	if (memread_ex = '1') -- Lc is only instruction that read from memory
-	then 
+	then
 	    if (reg_zt_ex = reg_zs_id or reg_zt_ex = reg_zt_id) -- pipeline shouid not be stall just because it is Lc
 		then                                            -- ther must also be a data dependency
 	        pc_write <= '0';
@@ -39,7 +38,3 @@ begin
     end process;
 
 end Behavioral;
-
-
-
-
