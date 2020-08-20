@@ -24,16 +24,13 @@ signal foundA, foundB: std_logic;
 
 begin
 
-  process (reg_zs_ex, reg_zt_ex, reg_zd_mem)
+  process (reg_zs_ex, reg_zt_ex, reg_zd_mem, reg_zd_wb, regwrite_wb, regwrite_mem)
   begin
-    foundA <= '0';
-    foundB <= '0';
     if (regwrite_mem = '1') and (reg_zd_mem = reg_zs_ex) and (reg_zd_mem /= "00000") then
       report  integer'image(to_integer(unsigned(reg_zd_mem)));
       report  integer'image(to_integer(unsigned(reg_zs_ex)));
       forwardA <= "01";
-      foundA <= '1';
-    elsif (regwrite_wb = '1') and (reg_zd_wb = reg_zs_ex) and (reg_zd_wb /= "00000") and (foundA = '0') then
+    elsif (regwrite_wb = '1') and (reg_zd_wb = reg_zs_ex) and (reg_zd_wb /= "00000") then
       forwardA <= "10";
     else
       forwardA <= "00";
@@ -41,8 +38,7 @@ begin
 
     if (regwrite_mem = '1') and (reg_zd_mem = reg_zt_ex) and (reg_zd_mem /= "00000") then
       forwardB <= "01";
-      foundB <= '1';
-    elsif (regwrite_wb = '1') and (reg_zd_wb = reg_zt_ex) and (reg_zd_wb /= "00000") and (foundB = '0') then
+    elsif (regwrite_wb = '1') and (reg_zd_wb = reg_zt_ex) and (reg_zd_wb /= "00000") then
       forwardB <= "10";
     else
       forwardB <= "00";
