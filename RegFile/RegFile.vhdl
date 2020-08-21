@@ -19,7 +19,7 @@ end RegisterFile;
 
 architecture behav of RegisterFile is
     subtype register_t is std_logic_vector(31 downto 0);
-    type regfile_t is array (integer range <>) of register_t;
+    type regfile_t is array (1023 downto 0) of register_t;
 
 
     -- Register file
