@@ -6,7 +6,8 @@ entity alu is
     a: in std_logic_vector(31 downto 0);
     b: in std_logic_vector(31 downto 0);
     op: in std_logic_vector(2 downto 0);
-    o: out std_logic_vector(31 downto 0)
+    o: out std_logic_vector(31 downto 0);
+    z: out std_logic
   );
 end alu;
 
@@ -82,4 +83,13 @@ architecture struct of alu is
     nnega <= rnega & vnega;
     nnegb <= rnegb & vnegb;
     alu_sum: mux8_1_32b port map(a, b, nsum, nsub, nmult, ndiv, nnega, nnegb, op, o);
+
+    process (a, b, op)
+      begin
+        if (a = b) then
+          z <= '1';
+        else
+          z <= '0';
+        end if;
+      end process;
 end;

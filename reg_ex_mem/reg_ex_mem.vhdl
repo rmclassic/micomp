@@ -11,7 +11,7 @@ entity reg_ex_mem is
          alures         : in std_logic_vector(31 downto 0);
          alures_out     : out std_logic_vector(31 downto 0);
          aluzero        : in std_logic;
-         aluzero_out    : inout std_logic;
+         aluzero_out    : out std_logic;
          read_data_2    : in std_logic_vector(31 downto 0);
          read_data_2_out: out std_logic_vector(31 downto 0);
          dst_reg        : in std_logic_vector(4 downto 0);
@@ -47,9 +47,23 @@ begin
 --------------------------------------------------
 ------------   READ REGISTERS -------------------
 --------------------------------------------------
-    process (clk, newpc, alures, aluzero, dst_reg, read_data_2)
+    process (clk)
     begin
         if clk = '1' then
+          if write_reg = '1' then
+            report "Writing DATA" severity note;
+
+            newpc_reg <= newpc;
+            alures_reg <= alures;
+            aluzero_reg <= aluzero;
+            dst_reg_reg <= dst_reg;
+            regwrite_reg <= regwrite;
+            memwrite_reg <= memwrite;
+            memread_reg <= memread;
+            memtoreg_reg <= memtoreg;
+
+            read_data_2_reg <= read_data_2;
+          end if;
           report "Reading DATA" severity note;
           newpc_out <= newpc_reg;
           alures_out <= alures_reg;
@@ -70,20 +84,7 @@ begin
     process (clk, write_reg, newpc, alures,aluzero,dst_reg,read_data_2)
     begin
       if clk = '1' then
-        if write_reg = '1' then
-          report "Writing DATA" severity note;
 
-          newpc_reg <= newpc;
-          alures_reg <= alures;
-          aluzero_reg <= aluzero;
-          dst_reg_reg <= dst_reg;
-          regwrite_reg <= regwrite;
-          memwrite_reg <= memwrite;
-          memread_reg <= memread;
-          memtoreg_reg <= memtoreg;
-
-          read_data_2_reg <= read_data_2;
-        end if;
       end if;
     end process;
 end behav;

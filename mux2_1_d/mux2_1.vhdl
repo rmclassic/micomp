@@ -55,6 +55,18 @@ entity mux2_1_5b is
   );
 end entity mux2_1_5b;
 
+
+library ieee;
+use ieee.std_logic_1164.all;
+entity mux2_1_1b is
+  port (
+    i0: in std_logic;
+    i1: in std_logic;
+    s: in std_logic;
+    o: out std_logic
+  );
+end entity mux2_1_1b;
+
 architecture behav of mux2_1_16b is
   begin
 
@@ -122,4 +134,18 @@ architecture behav of mux2_1_32b is
 
     end case;
   end process b_mux;
+end architecture;
+
+  architecture behav of mux2_1_1b is
+    begin
+
+      b_mux: process(i0,i1,s)
+      begin
+      case s is
+        when '0' => o <= i0;
+        when '1' => o <= i1;
+        when others => o <= i0;
+
+      end case;
+    end process b_mux;
 end architecture behav;

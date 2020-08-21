@@ -30,9 +30,9 @@ begin
 --------------------------------------------------
 ------------ READ PORTS -------------------------
 --------------------------------------------------
-    process (clk, regfile, read_reg_2)
+    process (clk)
     begin
-      if rising_edge(clk) then
+
         if write_enable = '1' then
           regfile(to_integer(unsigned(write_reg))) <= write_data;
         end if;
@@ -46,7 +46,7 @@ begin
         else
             read_data_1 <= regfile(to_integer(unsigned(read_reg_1)));
         end if;
-      end if;
+
     end process;
 
 end behav;

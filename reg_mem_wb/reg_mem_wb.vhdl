@@ -34,9 +34,9 @@ begin
 --------------------------------------------------
 ------------   READ REGISTERS -------------------
 --------------------------------------------------
-    process (clk, alures, dst_reg, mem_read_data)
+    process (clk)
     begin
-        if clk = '1' then
+        if rising_edge(clk) then
           report "Reading DATA" severity note;
           alures_out <= alures_reg;
           dst_reg_out <= dst_reg_reg;
@@ -50,9 +50,9 @@ begin
 --------------------------------------------------
 ------------   WRITE REGISTERS -------------------
 --------------------------------------------------
-    process (clk, write_reg, alures,dst_reg,mem_read_data)
+    process (clk)
     begin
-      if clk = '1' then
+      if rising_edge(clk) then
         if write_reg = '1' then
           report "Writing DATA" severity note;
 

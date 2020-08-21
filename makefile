@@ -1,4 +1,4 @@
-micomp: insmem adder reg_im_id reg_id_ex reg_ex_mem reg_mem_wb mux2_1 RegisterFile alu control datamem alu_control
+micomp: insmem adder reg_im_id reg_id_ex reg_ex_mem reg_mem_wb fwd mux3_1 mux2_1 hazard clock RegisterFile alu control datamem alu_control
 	ghdl -a ../cpu.vhdl
 	ghdl -c ../cpu.vhdl
 
@@ -6,10 +6,25 @@ insmem:
 	ghdl -a ../InsMem/InsMem.vhdl
 	ghdl -c ../InsMem/InsMem.vhdl
 
+clock:
+	ghdl -a ../clock/clock.vhdl
+	ghdl -c ../clock/clock.vhdl
+
+hazard:
+	ghdl -a ../hazard_detection/hazard_detection_unit.vhdl
+	ghdl -c ../hazard_detection/hazard_detection_unit.vhdl
+
 mux2_1:
 	ghdl -a ../mux2_1_d/mux2_1.vhdl
 	ghdl -c ../mux2_1_d/mux2_1.vhdl
 
+mux3_1:
+	ghdl -a ../mux3_1/mux3_1.vhdl
+	ghdl -c ../mux3_1/mux3_1.vhdl
+
+fwd:
+	ghdl -a ../forwarding_unit/forwarding_unit.vhdl
+	ghdl -c ../forwarding_unit/forwarding_unit.vhdl
 
 adder:
 	ghdl -a ../adder_d/adder.vhdl

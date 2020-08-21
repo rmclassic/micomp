@@ -1,0 +1,7 @@
+v 4
+file . "hazard_detection_unit.vhdl" "6e405617018236868bdc930d0112e8ff8dc2a391" "20200820101159.929":
+  entity hazard_detection_unit at 1( 0) + 0 on 25;
+  architecture behavioral of hazard_detection_unit at 18( 408) + 0 on 26;
+file . "hazard_detection_tb.vhdl" "3321532c9fad937fb35284a71b2844fcc88758ce" "20200820100905.772":
+  entity test at 1( 0) + 0 on 21;
+  architecture behav of test at 7( 70) + 0 on 22;

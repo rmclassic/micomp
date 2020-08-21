@@ -34,6 +34,10 @@ begin
 	        ifid_write <= '1';
 	        stall_sel <= '0';
 	    end if;
+    else
+      pc_write <= '1';
+      ifid_write <= '1';
+      stall_sel <= '0';
 	end if;
     end process;
 

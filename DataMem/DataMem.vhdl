@@ -14,21 +14,25 @@ end entity datamem;
 
 architecture RTL of datamem is
 
-   type ram_type is array (0 to (2**address'length)-1) of std_logic_vector(31 downto 0);
+   type ram_type is array (65535 downto 0) of std_logic_vector(31 downto 0);
    signal ram : ram_type;
-
 begin
 
-  process(clk) is
+  process(clk)
 
   begin
     if rising_edge(clk) then
       if (write_enable = '1') then
+        if address /= "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" and address /="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" then
         ram(to_integer(unsigned(address))) <= datain;
-      else
-        dataout <= ram(to_integer(unsigned(address)));
+        end if;
       end if;
-    end if;
+      else
+        if address /= "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" and address /="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" then
+          report "Reading Data" severity note;
+          dataout <= ram(to_integer(unsigned(address)));
+        end if;
+      end if;
   end process;
 
 end architecture RTL;

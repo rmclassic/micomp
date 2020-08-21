@@ -13,7 +13,6 @@ end entity divider;
 
 architecture Behavioral of divider is
 begin
-
-   Result <= std_logic_vector(unsigned(Nibble1) / unsigned(Nibble2));
-
+  Result <= "0000000000000000" when Nibble2 = "0000000000000000" else
+  std_logic_vector(unsigned(Nibble1) / unsigned(Nibble2));
 end architecture Behavioral;
