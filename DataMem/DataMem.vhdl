@@ -29,11 +29,13 @@ begin
         end if;
       end if;
       else
+    if (read_enable = '1')
         if address /= "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" and address /="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" then
           report "Reading Data" severity note;
           dataout <= ram(to_integer(unsigned(address)));
         end if;
       end if;
+    end if;
   end process;
 
 end architecture RTL;
