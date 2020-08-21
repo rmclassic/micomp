@@ -84,8 +84,8 @@ architecture struct of alu is
     nsub <= rsum & vsum;
     nmult <= rmult & vmult;
     ndiv <= rdiv & vdiv;
-    nnega <= rnega & vnega;
-    nnegb <= rnegb & vnegb;
+    nnega <= a(31 downto 16) & vnega;
+    nnegb <= b(31 downto 16) & vnegb;
     alu_sum: mux8_1_32b port map(a, b, nsum, nsub, nmult, ndiv, nnega, nnegb, op, o);
 
     process (a, b, op)
