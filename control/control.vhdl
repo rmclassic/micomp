@@ -78,7 +78,7 @@ process(opcode)
 
             report "Bne" severity note;
 
-      when "000110" => RegDst <= '0'; -- Bne
+      when "000110" => RegDst <= '0'; -- Bd
            MemToReg <= '0';
       		 Reg_Write <= '0';
     			 MemRead <= '0';

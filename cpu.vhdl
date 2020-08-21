@@ -157,6 +157,7 @@ architecture RTL of micomp is
         address: in std_logic_vector(31 downto 0);
         datain: in std_logic_vector(31 downto 0);
         write_enable: in std_logic;
+        read_enable: in std_logic;
         dataout: out std_logic_vector(31 downto 0)
       );
     end component;
@@ -250,7 +251,8 @@ architecture RTL of micomp is
       adder_pc: adder_32b port map("00000000000000000000000000000001", pc, pc_normal);
 
       adder_bne: adder_32b port map(reg_data_1, pc, pc_branch);
-      mux_pc: mux2_1_32b port map(pc_branch, pc_normal, aluzero, pc);
+      branch_taken <= branch_take and (not alu_zero_ex);
+      mux_pc: mux2_1_32b port map(pc_normal, pc_branch, branch_taken, pc_if);
       im0: insmem port map(clk, pc, ins_if, "00000000000000000000000000000000", '0');
       --------------------------------------- IF/ID
       if_id_0: reg_im_id port map(clk, pc_if, pc_id, ins_if, ins_id, clk);
@@ -275,7 +277,7 @@ architecture RTL of micomp is
       --------------------------------------- EX/MEM
       reg_ex_mem_0: reg_ex_mem port map(clk, pc_ex, pc_mem, alu_res_ex, alu_res_mem,aluzero,aluzero_mem, reg_data_2_ex, reg_data_2_mem, destreg_ex, destreg_mem, memwrite_ex, memwrite_mem, memread_ex,memread_mem, memtoreg_ex, memtoreg_mem, regwrite_ex, regwrite_mem, clk);
       --------------------------------------- MEM
-      datamem_0: datamem port map(clk, alu_res_mem, reg_data_2_mem, memwrite_mem, datamem_data_mem);
+      datamem_0: datamem port map(clk, alu_res_mem, reg_data_2_mem, memwrite_mem, memread_mem, datamem_data_mem);
       --------------------------------------- MEM/WB
       reg_mem_wb_0: reg_mem_wb port map(clk, datamem_data_mem, datamem_data_wb, alu_res_mem, alu_res_wb, destreg_mem, destreg_wb, memtoreg_mem, memtoreg_wb, regwrite_mem, regwrite_wb, clk);
       --------------------------------------- WB

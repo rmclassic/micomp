@@ -33,6 +33,7 @@ architecture behav of test is
       address: in std_logic_vector(31 downto 0);
       datain: in std_logic_vector(31 downto 0);
       write_enable: in std_logic;
+      read_enable: in std_logic;
       dataout: out std_logic_vector(31 downto 0)
     );
   end component;
@@ -89,7 +90,7 @@ begin
   cpu: micomp port map(clk, startpc, insaddr, insdata, rf_read_reg_1, rf_read_reg_2, rf_write_reg_micomp, rf_write_data_micomp, rf_write_enable_micomp, rf_read_data_1, rf_read_data_2, dm_address, dm_datain,dm_write_enable, dm_dataout);
   im_0: insmem port map(clk, insaddr, insdata, insdatain, inswrite);
   regfile_0: RegisterFile port map(clk, rf_read_reg_1, rf_read_reg_2, rf_write_reg, rf_write_data, rf_write_enable, rf_read_data_1, rf_read_data_2);
-  dm_0: datamem port map(clk, dm_address, dm_datain, dm_write_enable, dm_dataout);
+  dm_0: datamem port map(clk, dm_address, dm_datain, dm_write_enable, '1', dm_dataout);
 
 process
 begin

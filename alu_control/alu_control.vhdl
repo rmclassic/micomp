@@ -24,11 +24,11 @@ process(inputs)
     case inputs is
 	when "00------" => AluControl <= "000";
 	when "01------" => AluControl <= "011";
-	when "10100000" => AluControl <= "010";
-	when "10100010" => AluControl <= "011";
-	when "10101010" => AluControl <= "100";
-	when "10100100" => AluControl <= "101";
-	when "10100101" => AluControl <= "110";
+	when "10000000" => AluControl <= "010";
+	when "10000001" => AluControl <= "011";
+	when "10000010" => AluControl <= "100";
+	when "10000011" => AluControl <= "101";
+	when "10000100" => AluControl <= "110";
 	when others => AluControl <= "010";
     end case;
 end process;

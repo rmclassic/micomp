@@ -8,6 +8,7 @@ entity datamem is
     address      : in  std_logic_vector(31 downto 0);
     datain       : in  std_logic_vector(31 downto 0);
     write_enable : in  std_logic;
+    read_enable  : in std_logic;
     dataout      : out std_logic_vector(31 downto 0)
   );
 end entity datamem;

@@ -266,7 +266,7 @@ architecture RTL of micomp is
         pc <= startpc;
       -------------------------------------- IF
       adder_pc: adder_32b port map("00000000000000000000000000000001", pc, pc_normal);
-      branch_taken <= branch_take and alu_zero_ex;
+      branch_taken <= branch_take and (not alu_zero_ex);
       adder_bne: adder_32b port map(reg_data_1, pc, pc_branch);
       mux_pc: mux2_1_32b port map(pc_normal, pc_branch, branch_taken, pc_if);
       --im0: insmem port map(clk, pc, ins_if);
