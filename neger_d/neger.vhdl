@@ -14,9 +14,9 @@ architecture behav of neger_16b is
   begin
   process (i)
   begin
-    if (i(7) = '1')then
+    if (i(15) = '1')then
       o <= not std_logic_vector(unsigned(i) - 1);
-    elsif (i(7) = '0') then
+    elsif (i(15) = '0') then
       o <= std_logic_vector(unsigned(not i) + 1);
   end if;
 end process;

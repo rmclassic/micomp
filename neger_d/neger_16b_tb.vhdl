@@ -24,8 +24,8 @@ end record;
 
 type pattern_array is array (natural range <>) of pattern_type;
 constant patterns : pattern_array :=
-(("0001", "1111"),
-("0010", "1110"));
+(("0000000000000001", "1111111111111111"),
+("0000000000000010", "1111111111111110"));
 
 begin
   for a in patterns'range loop
